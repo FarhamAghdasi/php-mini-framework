@@ -9,7 +9,7 @@ if (!function_exists('config')) {
     function config(string $key, $default = null) {
         $app = app();
         $keys = explode('.', $key);
-        
+
         $value = $app->getConfig() ?? [];
         foreach ($keys as $segment) {
             if (isset($value[$segment])) {
@@ -18,7 +18,7 @@ if (!function_exists('config')) {
                 return $default;
             }
         }
-        
+
         return $value;
     }
 }
@@ -39,40 +39,40 @@ if (!function_exists('redirect')) {
 }
 
 if (!function_exists('session')) {
-    function session(string $key = null, $value = null) {
+    function session(?string $key = null, $value = null) {
         $app = app();
         $session = $app->getService('session');
-        
+
         if ($key === null) {
             return $session;
         }
-        
+
         if ($value === null) {
             return $session->get($key);
         }
-        
+
         $session->set($key, $value);
         return null;
     }
 }
 
 if (!function_exists('cache')) {
-    function cache(string $key = null, $value = null, int $ttl = 3600) {
+    function cache(?string $key = null, $value = null, int $ttl = 3600) {
         $app = app();
         $cache = $app->getService('cache');
-        
+
         if ($key === null) {
             return $cache;
         }
-        
+
         if ($value === null) {
             return $cache->get($key);
         }
-        
+
         if ($value === false) {
             return $cache->delete($key);
         }
-        
+
         return $cache->set($key, $value, $ttl);
     }
 }
